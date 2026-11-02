@@ -17,9 +17,10 @@ st.set_page_config(
 # ==========================================
 # CUSTOM CSS
 # ==========================================
+# Corrected parameter name to unsafe_allow_html=True
 st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://googleapis.com');
 
 html, body, [class*="css"] {
     font-family: 'Inter', sans-serif;
@@ -86,7 +87,7 @@ section[data-testid="stSidebar"] * {
     letter-spacing: 1px;
 }
 </style>
-""", unsafe_allow_safe_html=False) # یہاں ٹرپل کوٹ بند کر دیا گیا ہے
+""", unsafe_allow_html=True) 
 
 # ==========================================
 # APP MAIN BODY (Test UI)
