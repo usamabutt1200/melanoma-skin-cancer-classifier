@@ -98,5 +98,65 @@ section[data-testid="stSidebar"] * {
     letter-spacing: 1px;
 }
 
+.metric-value {
+    color: #F4F8FD;
+    font-size: 29px;
+    font-weight: 800;
+    margin-top: 10px;
+}
+
+/* Upload section */
+
+[data-testid="stFileUploader"] {
+    background: #101F33;
+    border: 1px dashed #35D6C0;
+    border-radius: 16px;
+    padding: 15px;
+}
+
+/* Buttons */
+
+.stButton > button {
+    background: linear-gradient(90deg, #20BFAE, #35D6C0);
+    color: #071522;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    padding: 12px 25px;
+    width: 100%;
+}
+
+.stButton > button:hover {
+    background: #63E5D4;
+    color: #071522;
+}
+
+/* Results */
+
+.result-title {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.result-description {
+    color: #A9BBD0;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.footer {
+    text-align: center;
+    color: #71849B;
+    font-size: 12px;
+    border-top: 1px solid #203149;
+    padding-top: 22px;
+    margin-top: 45px;
+}
+
+div[data-testid="stAlert"] {
+    border-radius: 12px;
+}
+
 </style>
 """, unsafe_allow_html=True)
