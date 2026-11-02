@@ -97,3 +97,28 @@ st.markdown('<p class="subtitle">Advanced AI-powered dermatological screening to
 
 st.sidebar.title("Navigation")
 st.sidebar.info("Upload your image to begin analytics.")
+# ==========================================
+# IMAGE UPLOAD & ANALYSIS SECTION
+# ==========================================
+st.markdown('<div class="premium-card">', unsafe_allow_html=True)
+st.markdown('<p class="metric-label">📊 Screening Panel</p>', unsafe_allow_html=True)
+
+# فائل اپلوڈر ایڈ کریں
+uploaded_file = st.file_uploader("Choose a skin lesion image...", type=["jpg", "jpeg", "png"])
+
+if uploaded_file is not None:
+    # امیج کو اوپن کریں
+    image = Image.open(uploaded_file)
+    
+    # اسکرین کو دو حصوں میں تقسیم کریں (لیفٹ پر امیج، رائٹ پر رزلٹ)
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.image(image, caption='Uploaded Image', use_container_width=True)
+        
+    with col2:
+        st.write("⏳ Analyzing image with AI model...")
+        # یہاں آپ کا ماڈل پریڈکشن کا کوڈ آئے گا
+
+st.markdown('</div>', unsafe_allow_html=True)
+
