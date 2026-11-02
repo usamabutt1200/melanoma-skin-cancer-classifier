@@ -98,12 +98,27 @@ st.markdown('<p class="subtitle">Advanced AI-powered dermatological screening to
 st.sidebar.title("Navigation")
 st.sidebar.info("Upload your image to begin analytics.")
 # ==========================================
-# IMAGE UPLOAD & ANALYSIS SECTION (WITH BUTTON)
+# MODEL LOADING (With Caching to prevent reload lags)
+# ==========================================
+@st.cache_resource
+def load_my_model():
+    # اگر آپ کی ماڈل فائل کا نام الگ ہے تو اسے یہاں تبدیل کریں (جیسے 'skin_cancer_model.h5')
+    model_path = "model.h5" 
+    if os.path.exists(model_path):
+        return tf.keras.models.load_model(model_path)
+    return None
+
+model = load_my_model()
+
+# بیماریوں کی لسٹ (اپنے ماڈل کی کلاسز کے مطابق ترتیب چیک کر لیں)
+class_names = ["Benign Keratosis", "Melanoma (Skin Cancer)", "Basal Cell Carcinoma"]
+
+# ==========================================
+# IMAGE UPLOAD & ANALYSIS SECTION
 # ==========================================
 st.markdown('<div class="premium-card">', unsafe_allow_html=True)
 st.markdown('<p class="metric-label">📊 Screening Panel</p>', unsafe_allow_html=True)
 
-# فائل اپلوڈر
 uploaded_file = st.file_uploader("Choose a skin lesion image...", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
@@ -116,15 +131,33 @@ if uploaded_file is not None:
         
     with col2:
         st.markdown("<br>", unsafe_allow_html=True)
-        # یہاں اینالیسس شروع کرنے کے لیے بٹن لگایا گیا ہے
+        
         if st.button("🔍 Analyze Image", type="primary"):
-            st.write("⏳ Processing and running predictions...")
-            
-            # 1. امیج پری پروسیسنگ (Image Preprocessing)
-            # 2. ماڈل پریڈکشن (Model Prediction)
-            # 3. رزلٹ ڈسپلے (Result Display)
-            st.success("✅ Analysis Complete! (Result details will go here)")
-            
+            if model is None:
+                st.error("❌ 'model.h5' فائل نہیں ملی! برائے مہربانی چیک کریں کہ ماڈل فائل اسی فولڈر میں موجود ہے جہاں app.py ہے۔")
+            else:
+                with st.spinner("⏳ Analyzing image with AI model..."):
+                    # 1. امیج کو ماڈل کے مطابق تیار کرنا (Preprocessing)
+                    # اگر آپ کا ماڈل 128x128 مانگتا ہے تو نیچے 224 کو 128 کر دیں
+                    img_resized = image.resize((224, 224)) 
+                    img_array = np.array(img_resized) / 255.0  # Normalization
+                    img_array = np.expand_dims(img_array, axis=0)  # Batch dimension
+                    
+                    # 2. ماڈل سے پریڈکشن لینا
+                    predictions = model.predict(img_array)[0]
+                    highest_pred_idx = np.argmax(predictions)
+                    predicted_class = class_names[highest_pred_idx]
+                    confidence = predictions[highest_pred_idx] * 100
+                    
+                    # 3. رزلٹ اسکرین پر دکھانا
+                    st.success("✅ Analysis Complete!")
+                    st.metric(label="Predicted Condition", value=predicted_class)
+                    st.metric(label="Confidence Level", value=f"{confidence:.2f}%")
+                    
+                    # سیکیورٹی اور معلوماتی گراف
+                    st.write("### Probability Breakdown:")
+                    for i, class_nm in enumerate(class_names):
+                        st.write(f"**{class_nm}**: {predictions[i]*100:.1f}%")
+                        st.progress(float(predictions[i]))
+
 st.markdown('</div>', unsafe_allow_html=True)
-
-
