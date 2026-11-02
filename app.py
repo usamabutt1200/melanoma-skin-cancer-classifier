@@ -1,13 +1,12 @@
 import streamlit as st
 import tensorflow as tf
 import numpy as np
-from PIL import Image
 import os
+from PIL import Image
 
 # ==========================================
 # PAGE CONFIGURATION
 # ==========================================
-
 st.set_page_config(
     page_title="DermaAI | Skin Analysis",
     page_icon="🔬",
@@ -18,10 +17,8 @@ st.set_page_config(
 # ==========================================
 # CUSTOM CSS
 # ==========================================
-
 st.markdown("""
 <style>
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 html, body, [class*="css"] {
@@ -44,7 +41,6 @@ header {
 }
 
 /* Sidebar */
-
 section[data-testid="stSidebar"] {
     background: #0D1728;
     border-right: 1px solid #1E3048;
@@ -55,7 +51,6 @@ section[data-testid="stSidebar"] * {
 }
 
 /* Main heading */
-
 .main-title {
     font-size: 38px;
     font-weight: 800;
@@ -75,13 +70,8 @@ section[data-testid="stSidebar"] * {
 }
 
 /* Cards */
-
 .premium-card {
-    background: linear-gradient(
-        145deg,
-        #14243A,
-        #0D192B
-    );
+    background: linear-gradient(145deg, #14243A, #0D192B);
     border: 1px solid #263B55;
     border-radius: 18px;
     padding: 24px;
@@ -94,3 +84,15 @@ section[data-testid="stSidebar"] * {
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
+}
+</style>
+""", unsafe_allow_safe_html=False) # یہاں ٹرپل کوٹ بند کر دیا گیا ہے
+
+# ==========================================
+# APP MAIN BODY (Test UI)
+# ==========================================
+st.markdown('<h1 class="main-title">DermaAI <span class="accent">Skin Analysis</span></h1>', unsafe_allow_html=True)
+st.markdown('<p class="subtitle">Advanced AI-powered dermatological screening tool</p>', unsafe_allow_html=True)
+
+st.sidebar.title("Navigation")
+st.sidebar.info("Upload your image to begin analytics.")
