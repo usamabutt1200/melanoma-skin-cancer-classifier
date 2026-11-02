@@ -21,7 +21,7 @@ st.set_page_config(
 # CUSTOM CSS
 # ==========================================
 
-st.markdown(textwrap.dedent("""
+st.markdown("""
 <style>
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
@@ -94,3 +94,9 @@ section[data-testid="stSidebar"] * {
     color: #91A4BD;
     font-size: 13px;
     font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+</style>
+""", unsafe_allow_html=True)
